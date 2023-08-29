@@ -1,4 +1,4 @@
-name: jest-ci
+name: jest-and-docker-ci
 
 on: push
 
@@ -9,10 +9,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Goto client and run tests
-        run: cd client && npm i && npm
+        run: cd client && npm i && npm test
   docker:
     needs: test-front
-    if: github.ref == 'ref/head/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -28,5 +28,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          context:"{{defaultContext}}:client"
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:quete1902
+          context: "{{defaultContext}}:client"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/quete1902:latest
